@@ -17,7 +17,15 @@ const reactionSchema = new Schema({
     type: Date,
     default: Date.now,
     get: function(createdAt) {
-      return createdAt.toISOString(); // Formatting the timestamp on query
+      return createdAt.toLocaleDateString('en-AU', { 
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZoneName: 'short'
+      }); // Formatting the timestamp on query
     }
   }
 }, {
@@ -38,7 +46,15 @@ const thoughtSchema = new Schema({
     type: Date,
     default: Date.now,
     get: function(createdAt) {
-      return createdAt.toISOString(); // Formatting the timestamp on query
+      return createdAt.toLocaleDateString('en-AU', { 
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZoneName: 'short'
+      }); // Formatting the timestamp on query
     }
   },
   username: {
@@ -61,4 +77,4 @@ thoughtSchema.virtual('reactionCount').get(function() {
 // Create the Thought model
 const Thought = mongoose.model('Thought', thoughtSchema);
 
-module.exports = { Thought, reactionSchema };
+module.exports = Thought;

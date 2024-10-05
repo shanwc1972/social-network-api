@@ -27,6 +27,9 @@ const userSchema = new Schema({
       ref: 'User' // Self-reference to the User model
     }
   ]
+},
+{
+    toJSON: { virtuals: true }, // Enable virtuals in JSON output
 });
 
 // Create a virtual property for friend count
