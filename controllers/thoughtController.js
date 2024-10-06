@@ -34,6 +34,13 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
+      
+      //Update the assocaited user's thought array
+      const user = await User.findOneAndUpdate(
+        { username: req.body.username },
+        { $addToSet: { thoughts: thought.id } }, // Add friendId to friends array
+        { new: true } // Return the updated user document
+    );
       res.json(thought);
     } catch (err) {
       console.log(err);

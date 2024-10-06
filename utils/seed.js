@@ -107,8 +107,10 @@ connection.once('open', async () => {
       thoughtText,
       username: randomUser,
     });
-    console.log(thoughts);
+    
   }
+
+  console.log(thoughts);
 
   // Add users to the collection and await the results
   const usersData = await User.create(users);
@@ -116,11 +118,25 @@ connection.once('open', async () => {
   // Add thoughts to the collection and await the results
   const thoughtData = await Thought.create(thoughts);
 
-  // Now that we have user documents, we need to update each user with friends using ObjectId references
+  // Create an array of user ids so that we use it to populate assocaied data 
   const userIds = usersData.map((user) => user._id);
 
+  //Given both user and thought documents, lets populate each user with their assoicate thoughts
+  for (let i =0; i < usersData.length; i++) {
+    let currentUserId = usersData[i]._id;
+    let currentUsername = usersData[i].username;
+
+    //Generate an array of matching thought ids from the thought documents
+    const thoughts = thoughtData
+    .filter((thought) => thought.username === currentUsername)
+    .map((thought) => thought._id);
+
+    // Update user document with thoughts list
+    await User.findByIdAndUpdate(currentUserId, { thoughts });
+  }
+
   for (let i = 0; i < usersData.length; i++) {
-    const currentUserId = usersData[i]._id;
+    let currentUserId = usersData[i]._id;
 
     // Generate a random list of friend IDs
     const friends = createRandomFriendIds(userIds, currentUserId);
@@ -130,8 +146,8 @@ connection.once('open', async () => {
   }
 
   // Log out the seed data to indicate what should appear in the database
-  console.log(usersData);
-  console.log(thoughtData);
+  // console.log(usersData);
+  // console.log(thoughtData);
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });
