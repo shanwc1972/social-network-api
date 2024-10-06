@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
 module.exports = {
@@ -65,12 +64,17 @@ module.exports = {
             const user = await User.findOneAndDelete(
                 { _id: req.params.userId },
             );
-        
+
             if (!user) {
                 res.status(404).json({ message: 'No user with this id!' });
             }
+
+             //Delete assocated thoughts associated with the user's username 
+             await Thought.deleteMany(
+                { username : user.username }
+            );
         
-            res.json({ message: 'User deleted' });
+            res.json({ message: 'User and associated thoughts deleted' });
             } catch (err) {
               res.status(500).json(err);
             }
