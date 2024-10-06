@@ -85,6 +85,12 @@ module.exports = {
         try {
             const { userId, friendId } = req.params;
 
+            // Check if the friendId is a valid user ID in the database
+            const friend = await User.findById(friendId);
+            if (!friend) {
+                return res.status(404).json({ message: 'No user found with this friend ID!' });
+            }
+
             const user = await User.findByIdAndUpdate(
                 userId,
                 { $addToSet: { friends: friendId } }, // Add friendId to friends array
@@ -100,6 +106,12 @@ module.exports = {
     async deleteFriend(req, res) {
         try {
             const { userId, friendId } = req.params;
+
+            // Check if the friendId is a valid user ID in the database
+            const friend = await User.findById(friendId);
+            if (!friend) {
+                return res.status(404).json({ message: 'No user found with this friend ID!' });
+            }
 
             const user = await User.findByIdAndUpdate(
                 userId,
