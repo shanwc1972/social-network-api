@@ -48,8 +48,8 @@ const createRandomFriendIds = (userIds, currentUserId) => {
   // Filter out the current user ID from the list
   const potentialFriends = userIds.filter((id) => !id.equals(currentUserId));
 
-  // Create a random number of friends (between 1 and 4)
-  const numberOfFriends = Math.floor(Math.random() * 4) + 1;
+  // Create a random number of friends (between 1 and 3)
+  const numberOfFriends = Math.floor(Math.random() * 3) + 1;
 
   // Shuffle the potential friends and select the desired number
   const shuffledFriends = potentialFriends.sort(() => 0.5 - Math.random());
@@ -91,6 +91,7 @@ connection.once('open', async () => {
       username,
       email,
     });
+    console.log(users);
   }
 
   // Loop 20 times to add thoughts to the thoughts array
@@ -106,6 +107,7 @@ connection.once('open', async () => {
       thoughtText,
       username: randomUser,
     });
+    console.log(thoughts);
   }
 
   // Add users to the collection and await the results
@@ -128,8 +130,8 @@ connection.once('open', async () => {
   }
 
   // Log out the seed data to indicate what should appear in the database
-  console.table(usersData);
-  console.table(thoughtData);
+  console.log(usersData);
+  console.log(thoughtData);
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });

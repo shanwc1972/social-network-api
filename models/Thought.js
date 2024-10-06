@@ -36,32 +36,32 @@ const reactionSchema = new Schema({
 
 // Define the Thought schema
 const thoughtSchema = new Schema({
-  thoughtText: {
-    type: String,
-    required: true,
-    minlength: 1,
-    maxlength: 280 // Ensuring the thought text is between 1 and 280 characters
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: function(createdAt) {
-      return createdAt.toLocaleDateString('en-AU', { 
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        timeZoneName: 'short'
-      }); // Formatting the timestamp on query
-    }
-  },
-  username: {
-    type: String,
-    required: true
-  },
-  reactions: [reactionSchema] // Array of nested documents using the reactionSchema
+    thoughtText: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 280 // Ensuring the thought text is between 1 and 280 characters
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: function(createdAt) {
+        return createdAt.toLocaleDateString('en-AU', { 
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        }); // Formatting the timestamp on query
+        }
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    reactions: [reactionSchema] // Array of nested documents using the reactionSchema
 }, {
   toJSON: {
     virtuals: true, // Enables virtuals when converting to JSON
