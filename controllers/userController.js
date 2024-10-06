@@ -6,11 +6,6 @@ module.exports = {
     async getUsers(req, res) {
       try {
         const users = await User.find();
-        //const userObj = users.map(user => ({
-        //  username: user.username,
-        //  email: user.email,
-        //  friendCount: user.friendCount,
-        //}));
         return res.json(users);
       } catch (err) {
         console.log(err);
@@ -85,8 +80,6 @@ module.exports = {
     async createFriend(req, res) {
         try {
             const { userId, friendId } = req.params;
-            console.log(`userId: ${userId}`);
-            console.log(`FriendId: ${friendId}`)
 
             const user = await User.findByIdAndUpdate(
                 userId,
@@ -103,8 +96,6 @@ module.exports = {
     async deleteFriend(req, res) {
         try {
             const { userId, friendId } = req.params;
-            console.log(`userId: ${userId}`);
-            console.log(`FriendId: ${friendId}`)
 
             const user = await User.findByIdAndUpdate(
                 userId,
