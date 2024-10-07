@@ -45,7 +45,7 @@ would add a reaction to reaction property for a given thoughtID
 
 A full video walkthrough, demonstrating the use of the backend using Insomnia can be found at:
 
-[social media video]()
+[social media video](https://drive.google.com/file/d/11NwQlvdhOjJdLhi5RzkyKJu2YpqZIcIU/view?usp=sharing)
 
 ## Contributing
 All backend express.js and Mongoose code was written or refactored from variously sourced code snippets by Warren Shan.
