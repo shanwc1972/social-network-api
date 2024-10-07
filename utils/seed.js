@@ -91,7 +91,6 @@ connection.once('open', async () => {
       username,
       email,
     });
-    console.log(users);
   }
 
   // Loop 20 times to add thoughts to the thoughts array
@@ -110,8 +109,6 @@ connection.once('open', async () => {
     
   }
 
-  console.log(thoughts);
-
   // Add users to the collection and await the results
   const usersData = await User.create(users);
 
@@ -126,12 +123,12 @@ connection.once('open', async () => {
     let currentUserId = usersData[i]._id;
     let currentUsername = usersData[i].username;
 
-    //Generate an array of matching thought ids from the thought documents
+    //Generate an array of filtered thought ids from the thought documents based ofd the username
     const thoughts = thoughtData
     .filter((thought) => thought.username === currentUsername)
     .map((thought) => thought._id);
 
-    // Update user document with thoughts list
+    // Update user document with this thoughts list
     await User.findByIdAndUpdate(currentUserId, { thoughts });
   }
 
@@ -145,9 +142,6 @@ connection.once('open', async () => {
     await User.findByIdAndUpdate(currentUserId, { friends });
   }
 
-  // Log out the seed data to indicate what should appear in the database
-  // console.log(usersData);
-  // console.log(thoughtData);
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });

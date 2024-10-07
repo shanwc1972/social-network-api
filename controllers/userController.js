@@ -17,12 +17,17 @@ module.exports = {
         try {
         const user = await User.findOne({ _id: req.params.userId })
             .populate('friends')
-            .populate('thoughts');
+            .populate('thoughts')
+            .select('-__v');
 
         if (!user) {
             return res.status(404).json({ message: 'No user with that ID' });
         }
-        res.json(user);
+        res.json({
+            friends: user.friends,
+            thoughts: user.thoughts,
+            ...user.toObject(),
+        });
         } catch (err) {
         console.log(err);
         return res.status(500).json(err);
